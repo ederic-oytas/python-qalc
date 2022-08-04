@@ -1,0 +1,25 @@
+//
+// Lark grammar file for the calculator.
+//
+
+?expr: mul
+?prod: sum
+    | prod "*" sum    -> mul
+    | prod "/" sum    -> div
+?sum: atom
+    | sum "+" atom    -> add
+    | sum "-" atom    -> sub
+?atom: NUMBER IDENT+  -> quantity
+    | "(" expr ")"
+    | "[" expr "]"
+    | "{" expr "}"
+
+
+NUMBER: DIGIT+
+IDENT: LETTER+
+
+%import common.DIGIT
+%import common.LETTER
+%import common.WS
+
+%ignore WS
