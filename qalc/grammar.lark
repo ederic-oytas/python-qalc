@@ -2,14 +2,14 @@
 // Lark grammar file for the calculator.
 //
 
-?expr: mul
+?expr: prod
 ?prod: sum
     | prod "*" sum    -> mul
     | prod "/" sum    -> div
 ?sum: atom
     | sum "+" atom    -> add
     | sum "-" atom    -> sub
-?atom: NUMBER IDENT+  -> quantity
+?atom: NUMBER IDENT*  -> quantity
     | "(" expr ")"
     | "[" expr "]"
     | "{" expr "}"
