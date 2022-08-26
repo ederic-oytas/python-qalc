@@ -1,7 +1,7 @@
 import argparse
 
 
-def make_parser() -> argparse.ArgumentParser:
+def make_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'expr', metavar='EXPR', type=str,
@@ -12,7 +12,7 @@ def make_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
-    parser = make_parser()
+    parser = make_arg_parser()
     args = parser.parse_args()
     expr: str = args.expr
     print(f'inputted: {expr}')
