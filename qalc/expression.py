@@ -12,7 +12,7 @@ class Expression:
 
 
 @dataclass
-class Addition:
+class Addition(Expression):
     """Represents an addition operation (+)."""
     left: Expression
     right: Expression
@@ -22,7 +22,7 @@ class Addition:
 
 
 @dataclass
-class Number:
+class Number(Expression):
     """Represents a number in qalc."""
     value: float
     
