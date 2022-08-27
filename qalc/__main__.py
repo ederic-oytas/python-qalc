@@ -1,4 +1,7 @@
 import argparse
+import lark
+
+from qalc.expression_transformer import ExpressionTransformer
 
 
 def make_arg_parser() -> argparse.ArgumentParser:
@@ -11,11 +14,25 @@ def make_arg_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def make_lark_parser() -> lark.Lark:
+    return lark.Lark.open(
+        'qalc/grammar.lark',  # TODO reliably get this resource
+        start='expr'
+    )
+
+
 def main() -> None:
-    parser = make_arg_parser()
-    args = parser.parse_args()
-    expr: str = args.expr
-    print(f'inputted: {expr}')
+    arg_parser = make_arg_parser()
+    lark_parser = make_lark_parser()
+    
+    args = arg_parser.parse_args()
+    expr_str: str = args.expr
+    ast = lark_parser.parse(expr_str)
+    
+    transformer = ExpressionTransformer()
+    expr = transformer.transform(ast)
+    
+    print(f'Expr:\n{expr}')
 
 
 if __name__ == '__main__':
