@@ -41,10 +41,10 @@ class BinaryInfixOperation(Expression):
         right_s = right.display_str()
         if isinstance(right, BinaryInfixOperation):
             if right.precedence < self.precedence:
-                right_s = f"{right_s}"
+                right_s = f"({right_s})"
             elif (right.precedence == self.precedence
                     and right.associativity != 'right'):
-                right_s = f"{right_s}"
+                right_s = f"({right_s})"
         
         return f"{left_s} {self.symbol} {right_s}"
 
