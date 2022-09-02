@@ -34,9 +34,7 @@ class Addition(BinaryInfixOperation):
     left: Expression
     right: Expression
     
-    associativity = 'left'
     symbol = '+'
-    precedence = 1000
     
     def evaluate(self) -> Any:
         return self.left.evaluate() + self.right.evaluate()
