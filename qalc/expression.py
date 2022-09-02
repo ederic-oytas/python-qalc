@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from msilib.schema import Binary
 import operator
-from typing import Any, Callable, ClassVar, Literal, Union
+from typing import Any, Callable, ClassVar
 
 
 class Expression(ABC):
