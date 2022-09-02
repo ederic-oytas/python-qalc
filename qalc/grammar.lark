@@ -3,8 +3,12 @@
 //
 
 ?expr: sum
-?sum: atom
-    | sum "+" atom    -> add
+?sum: prod
+    | sum "+" prod    -> add
+    | sum "-" prod    -> sub
+?prod: atom
+    | prod "*" atom   -> mul
+    | prod "/" atom   -> div
 ?atom: NUMBER         -> number
 
 

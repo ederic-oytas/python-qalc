@@ -1,4 +1,4 @@
-from .expression import Addition, Number
+from .expression import Addition, Division, Multiplication, Number, Subtraction
 
 import lark
 
@@ -7,8 +7,10 @@ import lark
 @lark.v_args(inline=True)
 class ExpressionTransformer(lark.Transformer):
     
-    def add(self, left, right):
-        return Addition(left, right)
+    add = Addition
+    sub = Subtraction
+    mul = Multiplication
+    div = Division
     
     def number(self, value_token: lark.Token) -> Number:
         return Number(float(value_token))

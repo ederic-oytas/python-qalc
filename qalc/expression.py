@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, ClassVar, Literal, Union
+from msilib.schema import Binary
+import operator
+from typing import Any, Callable, ClassVar, Literal, Union
 
 
 class Expression(ABC):
@@ -22,22 +24,37 @@ class BinaryInfixOperation(Expression):
     right: Expression
     
     symbol: ClassVar[str]
+    operation: ClassVar[Callable[[Any, Any], Any]]
+    
+    def evaluate(self) -> Any:
+        return self.operation(self.left.evaluate(), self.right.evaluate())
     
     def display_str(self) -> str:
         """Return a display string of this expression."""
         return f"({self.left.display_str()} {self.symbol} {self.right.display_str()})"
 
-
-@dataclass
 class Addition(BinaryInfixOperation):
     """Represents an addition operation (+)."""
-    left: Expression
-    right: Expression
-    
     symbol = '+'
+    operation = operator.add
+
+
+class Subtraction(BinaryInfixOperation):
+    """Represents a subtraction operation (-)."""
+    symbol = '-'
+    operation = operator.sub
+
+
+class Multiplication(BinaryInfixOperation):
+    """Represents a multiplication operation (*)."""
+    symbol = '*'
+    operation = operator.mul
     
-    def evaluate(self) -> Any:
-        return self.left.evaluate() + self.right.evaluate()
+
+class Division(BinaryInfixOperation):
+    """Represents a division operation (/)."""
+    symbol = '/'
+    operation = operator.truediv
 
 
 @dataclass
