@@ -1,6 +1,7 @@
 
-
-from qalc.expression import Addition, Number
+from typing import Any, Callable
+import operator
+from qalc.expression import Addition, BinaryInfixOperation, Division, Multiplication, Number, Subtraction
 
 
 def test_number():
@@ -9,10 +10,46 @@ def test_number():
         assert number.evaluate() == i
 
 
-def test_addition():
-    A = Addition
-    N = Number
+
+
+class BinaryInfixOperationTests:
     
-    assert A(N(1.0), N(2.5)).evaluate() == 3.5
-    assert A(A(N(5.0), N(3.0)), N(10.5)).evaluate() == 18.5
-    assert A(A(N(5.0), N(3.0)), A(N(10.5), N(10.5))).evaluate() == 29.0
+    expr_type: type[BinaryInfixOperation]
+    operation: Callable[[Any, Any], Any]
+    
+    number_cases = [
+        (1.0, 2.5),
+        (5.0, 3.0),
+        (3049.5, 574.5),
+        (1234895.35, 48234.5),
+        (-1234895.35, 48234.5),
+        (-1234895.35, -48234.5),
+        (1234895.35, -48234.5),
+        (32149.45, 1840.8021934)
+    ]
+    
+    def test_evaluate(self):
+        for a, b in self.number_cases:
+            expr = self.expr_type(Number(a), Number(b))
+            assert expr.evaluate() == self.operation(a, b)
+
+
+class TestAddition(BinaryInfixOperationTests):
+    expr_type = Addition
+    operation = operator.add
+
+
+class TestSubtraction(BinaryInfixOperationTests):
+    expr_type = Subtraction
+    operation = operator.sub
+
+
+class TestMultiplication(BinaryInfixOperationTests):
+    expr_type = Multiplication
+    operation = operator.mul
+    
+    
+class TestDivision(BinaryInfixOperationTests):
+    expr_type = Division
+    operation = operator.truediv
+
