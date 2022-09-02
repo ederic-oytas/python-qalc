@@ -1,3 +1,4 @@
+from decimal import Decimal
 from .expression import Addition, Division, Multiplication, Number, Subtraction
 
 import lark
@@ -13,6 +14,6 @@ class ExpressionTransformer(lark.Transformer):
     div = Division
     
     def number(self, value_token: lark.Token) -> Number:
-        return Number(float(value_token))
+        return Number(Decimal(value_token))
     
     

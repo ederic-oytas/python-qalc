@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from decimal import Decimal
 import operator
 from typing import Any, Callable, ClassVar
 
@@ -59,9 +60,9 @@ class Division(BinaryInfixOperation):
 @dataclass
 class Number(Expression):
     """Represents a number in qalc."""
-    value: float
+    value: Decimal
     
-    def evaluate(self) -> float:
+    def evaluate(self) -> Decimal:
         return self.value
     
     def display_str(self) -> str:
