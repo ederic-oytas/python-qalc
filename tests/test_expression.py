@@ -1,4 +1,3 @@
-
 from typing import Any, Callable
 import operator
 from qalc.expression import Addition, BinaryInfixOperation, Division, Multiplication, Number, Subtraction
@@ -8,8 +7,6 @@ def test_number():
     for i in [0.0, 1.0, 5.5, 100.0, 3.1, 3.2]:
         number = Number(i)
         assert number.evaluate() == i
-
-
 
 
 class BinaryInfixOperationTests:
@@ -52,4 +49,3 @@ class TestMultiplication(BinaryInfixOperationTests):
 class TestDivision(BinaryInfixOperationTests):
     expr_type = Division
     operation = operator.truediv
-
