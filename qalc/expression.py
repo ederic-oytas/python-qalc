@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, ClassVar, Literal
+from typing import Any, ClassVar, Literal, Union
 
 
 class Expression(ABC):
@@ -21,32 +21,11 @@ class BinaryInfixOperation(Expression):
     left: Expression
     right: Expression
     
-    associativity: ClassVar[Literal['left', 'right', 'neither']]
     symbol: ClassVar[str]
-    precedence: ClassVar[int]
     
     def display_str(self) -> str:
         """Return a display string of this expression."""
-        
-        left = self.left
-        left_s = left.display_str()
-        if isinstance(left, BinaryInfixOperation):
-            if left.precedence < self.precedence:
-                left_s = f"({left_s})"
-            elif (left.precedence == self.precedence
-                    and left.associativity != 'left'):
-                left_s = f"({left_s})"
-        
-        right = self.right
-        right_s = right.display_str()
-        if isinstance(right, BinaryInfixOperation):
-            if right.precedence < self.precedence:
-                right_s = f"({right_s})"
-            elif (right.precedence == self.precedence
-                    and right.associativity != 'right'):
-                right_s = f"({right_s})"
-        
-        return f"{left_s} {self.symbol} {right_s}"
+        return f"({self.left.display_str()} {self.symbol} {self.right.display_str()})"
 
 
 @dataclass
