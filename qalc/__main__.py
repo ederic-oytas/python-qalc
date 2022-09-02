@@ -1,5 +1,6 @@
 import argparse
 import lark
+from qalc.expression import Expression
 
 from qalc.expression_transformer import ExpressionTransformer
 
@@ -30,9 +31,13 @@ def main() -> None:
     ast = lark_parser.parse(expr_str)
     
     transformer = ExpressionTransformer()
-    expr = transformer.transform(ast)
+    expr: Expression = transformer.transform(ast)
     
-    print(f'Expr:\n{expr}')
+    print()
+    print(f"  {expr.display_str()}")
+    print()
+    print(expr.evaluate())
+    print()
 
 
 if __name__ == '__main__':
